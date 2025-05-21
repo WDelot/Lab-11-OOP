@@ -42,6 +42,10 @@
             this.labelStringLengthResult = new System.Windows.Forms.Label();
             this.labelStringLengthBytesResult = new System.Windows.Forms.Label();
             this.textBoxDecimalStringResult = new System.Windows.Forms.TextBox();
+            this.Sort = new System.Windows.Forms.Button();
+            this.Clone = new System.Windows.Forms.Button();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.Create = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -174,12 +178,54 @@
             this.textBoxDecimalStringResult.Size = new System.Drawing.Size(318, 22);
             this.textBoxDecimalStringResult.TabIndex = 15;
             // 
+            // Sort
+            // 
+            this.Sort.Location = new System.Drawing.Point(819, 37);
+            this.Sort.Name = "Sort";
+            this.Sort.Size = new System.Drawing.Size(98, 53);
+            this.Sort.TabIndex = 16;
+            this.Sort.Text = "Сортувати";
+            this.Sort.UseVisualStyleBackColor = true;
+            this.Sort.Click += new System.EventHandler(this.Sort_Click);
+            // 
+            // Clone
+            // 
+            this.Clone.Location = new System.Drawing.Point(819, 149);
+            this.Clone.Name = "Clone";
+            this.Clone.Size = new System.Drawing.Size(98, 53);
+            this.Clone.TabIndex = 17;
+            this.Clone.Text = "Клонувати";
+            this.Clone.UseVisualStyleBackColor = true;
+            this.Clone.Click += new System.EventHandler(this.Clone_Click);
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 16;
+            this.listBox1.Location = new System.Drawing.Point(934, 38);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(226, 164);
+            this.listBox1.TabIndex = 18;
+            // 
+            // Create
+            // 
+            this.Create.Location = new System.Drawing.Point(819, 94);
+            this.Create.Name = "Create";
+            this.Create.Size = new System.Drawing.Size(98, 53);
+            this.Create.TabIndex = 19;
+            this.Create.Text = "Додати";
+            this.Create.UseVisualStyleBackColor = true;
+            this.Create.Click += new System.EventHandler(this.Create_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(888, 219);
+            this.ClientSize = new System.Drawing.Size(1188, 219);
+            this.Controls.Add(this.Create);
+            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.Clone);
+            this.Controls.Add(this.Sort);
             this.Controls.Add(this.textBoxDecimalStringResult);
             this.Controls.Add(this.labelStringLengthBytesResult);
             this.Controls.Add(this.labelStringLengthResult);
@@ -195,8 +241,8 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.MaximumSize = new System.Drawing.Size(906, 266);
-            this.MinimumSize = new System.Drawing.Size(906, 266);
+            this.MaximumSize = new System.Drawing.Size(1206, 266);
+            this.MinimumSize = new System.Drawing.Size(1206, 266);
             this.Name = "Form1";
             this.Text = "Стрічки";
             this.ResumeLayout(false);
@@ -220,6 +266,10 @@
         private System.Windows.Forms.Label labelStringLengthResult;
         private System.Windows.Forms.Label labelStringLengthBytesResult;
         private System.Windows.Forms.TextBox textBoxDecimalStringResult;
+        private System.Windows.Forms.Button Sort;
+        private System.Windows.Forms.Button Clone;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Button Create;
     }
 }
 

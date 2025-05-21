@@ -10,8 +10,10 @@ using System.Windows.Forms;
 
 namespace Lab_11_OOP
 {
+
     public partial class Form1 : Form
     {
+        private List<DecimalString> decimalStringList = new List<DecimalString>();
         public Form1()
         {
             InitializeComponent();
@@ -34,6 +36,7 @@ namespace Lab_11_OOP
             String customString = new String(textBoxStringInput.Text);
             customString.Clear();
             textBoxStringInput.Clear();
+            listBox1.Items.Clear();
         }
 
 
@@ -65,7 +68,7 @@ namespace Lab_11_OOP
                 return;
             }
 
-            DecimalString difference = num1.Difference(num2);
+            DecimalString difference = (DecimalString)num1.Difference(num2);
             textBoxDecimalStringResult.Text = $"{difference.ToString()}";
         }
 
@@ -126,5 +129,98 @@ namespace Lab_11_OOP
 
             textBoxDecimalStringResult.Text = $"{num1.IsGreaterThan(num2)}";
         }
+
+        private void Sort_Click(object sender, EventArgs e)
+        {
+            if (listBox1.Items.Count >= 10)
+            {
+                MessageBox.Show("Досягнуто 10 елементів! Лістбокс буде очищено.", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                decimalStringList.Clear();
+                listBox1.Items.Clear();
+                return;
+            }
+            if (decimalStringList.Count > 0)
+            {
+                decimalStringList.Sort();
+                listBox1.Items.Clear();
+                foreach (var decString in decimalStringList)
+                {
+                    listBox1.Items.Add(decString.ToString());
+                }
+            }
+            else
+            {
+                MessageBox.Show("Список DecimalString порожній. Сортування неможливе.", "Повідомлення");
+            }
+        }
+
+        private void Clone_Click(object sender, EventArgs e)
+
+        {
+            if (listBox1.Items.Count >= 10)
+            {
+                MessageBox.Show("Досягнуто 10 елементів! Лістбокс буде очищено.", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                decimalStringList.Clear();
+                listBox1.Items.Clear();
+                return;
+            }
+            if (decimalStringList.Count == 0)
+            {
+                MessageBox.Show("Список DecimalString порожній. Клонування неможливе.", "Повідомлення");
+                return;
+            }
+         
+
+            List<DecimalString> clonedStrings = new List<DecimalString>();
+            foreach (var decString in decimalStringList)
+            {
+                clonedStrings.Add(decString.Clone() as DecimalString);
+            }
+
+            decimalStringList.AddRange(clonedStrings);
+            foreach (var clonedString in clonedStrings)
+            {
+                listBox1.Items.Add(clonedString.ToString());
+            }
+        }
+
+        private void Create_Click(object sender, EventArgs e)
+        {
+            if (listBox1.Items.Count >= 10)
+            {
+                MessageBox.Show("Досягнуто 10 елементів! Лістбокс буде очищено.", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                decimalStringList.Clear();
+                listBox1.Items.Clear();
+                return;
+            }
+            if (string.IsNullOrEmpty(textBoxDecimal1.Text))
+            {
+                MessageBox.Show("Список DecimalString не відповідає умовам створення.", "Повідомлення");
+                return;
+            }
+            
+            string input = textBoxDecimal1.Text;
+            DecimalString newDecimalString = new DecimalString(input);
+
+            if (newDecimalString.IsValid)
+            {
+                decimalStringList.Add(newDecimalString);
+                listBox1.Items.Add(newDecimalString.ToString());
+                textBoxDecimal1.Clear();
+            }
+            else
+            {
+                MessageBox.Show("Введено некоректний рядок для DecimalString.", "Помилка");
+            }
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+
+
+
     }
 }
