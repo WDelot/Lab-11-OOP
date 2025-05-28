@@ -14,9 +14,11 @@ namespace Lab_11_OOP
     public partial class Form1 : Form
     {
         private List<DecimalString> decimalStringList = new List<DecimalString>();
+        private EnginCalcCollection _calcCollection;
         public Form1()
         {
             InitializeComponent();
+            _calcCollection = new EnginCalcCollection();
         }
 
         private void buttonStringLength_Click(object sender, EventArgs e)
@@ -169,7 +171,7 @@ namespace Lab_11_OOP
                 MessageBox.Show("Список DecimalString порожній. Клонування неможливе.", "Повідомлення");
                 return;
             }
-         
+
 
             List<DecimalString> clonedStrings = new List<DecimalString>();
             foreach (var decString in decimalStringList)
@@ -198,7 +200,7 @@ namespace Lab_11_OOP
                 MessageBox.Show("Список DecimalString не відповідає умовам створення.", "Повідомлення");
                 return;
             }
-            
+
             string input = textBoxDecimal1.Text;
             DecimalString newDecimalString = new DecimalString(input);
 
@@ -219,8 +221,88 @@ namespace Lab_11_OOP
 
         }
 
+        private void buttonAddCalculator_Click(object sender, EventArgs e)
+        {
+            string model = textBoxCalcModel.Text;
+            if (!double.TryParse(textBoxCalcPrice.Text, out double price))
+            {
+                MessageBox.Show("Будь ласка, введіть коректну ціну.", "Помилка введення");
+                return;
+            }
 
+            if (string.IsNullOrWhiteSpace(model))
+            {
+                MessageBox.Show("Будь ласка, введіть модель калькулятора.", "Помилка введення");
+                return;
+            }
 
+            EngineeringCalculator newCalc = new EngineeringCalculator(model, price);
 
+            // Додаємо в обидві колекції (використовуємо модель як ключ для прикладу)
+            _calcCollection.AddLegacyCalculator(model, newCalc);
+            _calcCollection.AddGenericCalculator(model, newCalc);
+
+            MessageBox.Show($"Калькулятор '{model}' додано.", "Додано");
+            UpdateCalculatorListBoxes();
+            textBoxCalcModel.Clear();
+            textBoxCalcPrice.Clear();
+        }
+
+        private void buttonShowLegacyCalc_Click(object sender, EventArgs e)
+        {
+            string key = textBoxCalcKey.Text;
+            string info = _calcCollection.GetLegacyElementInfo(key);
+            MessageBox.Show(info, "Інформація про калькулятор (SortedList)");
+        }
+
+        private void buttonShowGenericCalc_Click(object sender, EventArgs e)
+        {
+            string key = textBoxCalcKey.Text;
+            string info = _calcCollection.GetGenericElementInfo(key);
+            MessageBox.Show(info, "Інформація про калькулятор (SortedList<T>)");
+        }
+
+        private void buttonEnumerateLegacy_Click(object sender, EventArgs e)
+        {
+            string enumeration = _calcCollection.EnumerateLegacyCollection();
+            MessageBox.Show(enumeration, "Перелік елементів SortedList");
+        }
+
+        private void buttonEnumerateGeneric_Click(object sender, EventArgs e)
+        {
+            string enumeration = _calcCollection.EnumerateGenericCollection();
+            MessageBox.Show(enumeration, "Перелік елементів SortedList<T>");
+        }
+
+        private void buttonRemoveLegacyCalc_Click(object sender, EventArgs e)
+        {
+            string keyToRemove = textBoxCalcKey.Text;
+            _calcCollection.RemoveLegacyCalculator(keyToRemove);
+            MessageBox.Show($"Елемент з ключем '{keyToRemove}' видалено з SortedList (якщо існував).", "Видалення");
+            UpdateCalculatorListBoxes();
+        }
+
+        private void buttonRemoveGenericCalc_Click(object sender, EventArgs e)
+        {
+            string keyToRemove = textBoxCalcKey.Text;
+            _calcCollection.RemoveGenericCalculator(keyToRemove);
+            MessageBox.Show($"Елемент з ключем '{keyToRemove}' видалено з SortedList<T> (якщо існував).", "Видалення");
+            UpdateCalculatorListBoxes();
+        }
+
+        private void UpdateCalculatorListBoxes()
+        {
+            listBoxLegacyCalculators.Items.Clear();
+            foreach (EngineeringCalculator calc in _calcCollection.GetLegacyCalculators())
+            {
+                listBoxLegacyCalculators.Items.Add(calc.ToString());
+            }
+
+            listBoxGenericCalculators.Items.Clear();
+            foreach (EngineeringCalculator calc in _calcCollection.GetGenericCalculators())
+            {
+                listBoxGenericCalculators.Items.Add(calc.ToString());
+            }
+        }
     }
 }
